@@ -3,11 +3,20 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const { stringify } = require('querystring');
 
+const serverless = require('serverless-http');
+
 var cors = require('cors');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
+
+app.use('/.netlify/functions/server', router);  // path must route to lambda
+app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
+
+module.exports = app;
+module.exports.handler = serverless(app);
 
 mongoose.connect("mongodb+srv://georgeadono:adono123@cluster0.rrqhofb.mongodb.net/?retryWrites=true&w=majority")
 
