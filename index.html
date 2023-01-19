@@ -2,7 +2,6 @@
 <html>
   <head>
     
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -35,7 +34,7 @@
 
         $.ajax({
             type: "POST",
-            url: "http://159.223.208.79/message/send",
+            url: "https://noobcms.store/message/send",
             data: JSON.stringify(data),
             contentType: "application/json",
 
