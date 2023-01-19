@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+
+<body class ="mi-bg-image">
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+
+$(document).ready(function () {
+  // Make an AJAX request to retrieve the data from the server
+  $.ajax({
+    type: "GET",
+    url: "https://noobcms.store/message",
+    success: function (data) {
+      // Loop through the data and create a div element for each item
+      for (let i = 0; i < data.length; i++) {
+        let div = document.createElement("div");
+        div.innerHTML = "Απο: " + data[i].sender + "<br>" + "Προς: " + data[i].reciever;
+        let p = document.createElement("p");
+        p.innerHTML = data[i].message;
+        p.classList.add("message-content");
+        div.appendChild(p);
+        div.classList.add("message-item");
+        document.body.appendChild(div);
+      }
+
+      $(".message-item").click(function () {
+        let clickedDiv = $(this)[0]; // Get the actual DOM element, not the jQuery object
+        clickedDiv.requestFullscreen(); // Open the div in full screen
+      });
+
+      document.addEventListener("fullscreenchange", function () {
+        if (document.fullscreenElement) {
+          $("#exitFullscreen").show(); // Show the exit fullscreen button
+        } else {
+          $("#exitFullscreen").hide(); // Hide the exit fullscreen button
+        }
+      });
+
+      $("#exitFullscreen").click(function () {
+        document.exitFullscreen();
+      });
+    },
+    error: function (xhr, status, error) {
+      alert("Error: " + error);
+    }
+  });
+});
+
+
+  </script>
+
+
+</body>
+
+</html>
