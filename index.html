@@ -1,6 +1,59 @@
 <!DOCTYPE html>
-<object
-  type="text/html"
-  data="/.netlify/functions/server"
-  style="width:100%;height:100%;"
->
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+  </head>
+  <body class ="bg-image">
+    
+      <b>Απο:</b> <input type="text" id="name"><br>
+      <b>Προς:</b> <input type="text" id="recipient"><br>
+      <b>Ραβασάκι:</b> <textarea id="message"></textarea><br>
+      <button id="submit-btn">Submit</button>
+   
+
+
+    <script>
+        
+        $("#submit-btn").click(function(){
+        var name = $("#name").val();
+        var recipient = $("#recipient").val();
+        var message = $("#message").val();
+        
+        if (name == "" || recipient == "" || message == "") {
+        alert("Τα πεδία είναι κενά.");
+        return;
+        }
+
+
+        var data = {sender: name, reciever: recipient, message: message};
+
+
+        $.ajax({
+            type: "POST",
+            url: "http://159.223.208.79/message/send",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+
+            success: function(response){
+            console.log("Success: " + JSON.stringify(response));
+            $("#name").val("");
+            $("#recipient").val("");
+            $("#message").val("");
+            alert("Το μήνυμα εστάλη!");
+            },
+
+            error: function(xhr, status, error){
+            console.log("Error: " + JSON.stringify(error));
+            alert("Κάτι πήγε λάθος!");
+            }
+        });
+        });
+    
+      </script>
+
+
+  </body>
+</html>
+
